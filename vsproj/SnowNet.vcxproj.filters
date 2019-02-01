@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="snownet-src">
+      <UniqueIdentifier>{546fa1db-a18b-4c8c-a652-4008a1a47953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="service-src">
+      <UniqueIdentifier>{2744682b-9fd9-4ba3-83f8-b6e21d09a3fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="service">
+      <UniqueIdentifier>{68498dba-4dd5-4732-a053-d3db7cd30ef7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib-src">
+      <UniqueIdentifier>{94bc6040-58b0-4aec-b572-8d78385bbb61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples">
+      <UniqueIdentifier>{b41c32b0-fb07-4cbc-80c2-c87128ab4947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{64fa273a-e2b4-4166-8097-d5715cb95c4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{c063b6e5-0277-4055-aca9-1bbbaedfa65a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd">
+      <UniqueIdentifier>{1772bad9-68ea-492a-8636-8950f949f356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\lua">
+      <UniqueIdentifier>{71727fc6-70ea-4eca-b91b-6a5afb6e876a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\snownet-src\snownet_test.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_main.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\malloc_hook.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\Makefile">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\platform.mk">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\README.md">
+      <Filter>res</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\snownet-src\snownet_test.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\atomic.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\malloc_hook.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_malloc.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lauxlib.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lua.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lua.hpp">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\luaconf.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lualib.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\rwlock.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\spinlock.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
