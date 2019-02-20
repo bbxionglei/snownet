@@ -12,25 +12,65 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\snownet-src\malloc_hook.cc" />
+    <ClCompile Include="..\snownet-src\snownet_env.cc" />
     <ClCompile Include="..\snownet-src\snownet_main.cc" />
     <ClCompile Include="..\snownet-src\snownet_test.cc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\examples\abort.lua" />
+    <None Include="..\examples\agent.lua" />
+    <None Include="..\examples\checkdeadloop.lua" />
+    <None Include="..\examples\client.lua" />
+    <None Include="..\examples\cluster1.lua" />
+    <None Include="..\examples\cluster2.lua" />
+    <None Include="..\examples\clustername.lua" />
+    <None Include="..\examples\config" />
+    <None Include="..\examples\config.c1" />
+    <None Include="..\examples\config.c2" />
+    <None Include="..\examples\config.login" />
+    <None Include="..\examples\config.mc" />
+    <None Include="..\examples\config.mongodb" />
+    <None Include="..\examples\config.mysql" />
+    <None Include="..\examples\config.path" />
+    <None Include="..\examples\config.userlog" />
+    <None Include="..\examples\config_log" />
+    <None Include="..\examples\globallog.lua" />
+    <None Include="..\examples\injectlaunch.lua" />
+    <None Include="..\examples\login\client.lua" />
+    <None Include="..\examples\login\gated.lua" />
+    <None Include="..\examples\login\logind.lua" />
+    <None Include="..\examples\login\main.lua" />
+    <None Include="..\examples\login\msgagent.lua" />
+    <None Include="..\examples\main.lua" />
+    <None Include="..\examples\main_log.lua" />
+    <None Include="..\examples\main_mongodb.lua" />
+    <None Include="..\examples\main_mysql.lua" />
+    <None Include="..\examples\preload.lua" />
+    <None Include="..\examples\proto.lua" />
+    <None Include="..\examples\protoloader.lua" />
+    <None Include="..\examples\share.lua" />
+    <None Include="..\examples\simpledb.lua" />
+    <None Include="..\examples\simplemonitor.lua" />
+    <None Include="..\examples\simpleweb.lua" />
+    <None Include="..\examples\userlog.lua" />
+    <None Include="..\examples\watchdog.lua" />
     <None Include="..\LICENSE" />
     <None Include="..\Makefile" />
     <None Include="..\platform.mk" />
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lauxlib.h" />
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lua.h" />
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lua.hpp" />
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\luaconf.h" />
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lualib.h" />
+    <ClInclude Include="..\3rd\lua-5.3.5\lauxlib.h" />
+    <ClInclude Include="..\3rd\lua-5.3.5\lua.h" />
+    <ClInclude Include="..\3rd\lua-5.3.5\lua.hpp" />
+    <ClInclude Include="..\3rd\lua-5.3.5\luaconf.h" />
+    <ClInclude Include="..\3rd\lua-5.3.5\lualib.h" />
     <ClInclude Include="..\snownet-src\atomic.h" />
     <ClInclude Include="..\snownet-src\malloc_hook.h" />
     <ClInclude Include="..\snownet-src\rwlock.h" />
     <ClInclude Include="..\snownet-src\snownet.h" />
+    <ClInclude Include="..\snownet-src\snownet_env.h" />
+    <ClInclude Include="..\snownet-src\snownet_imp.h" />
     <ClInclude Include="..\snownet-src\snownet_malloc.h" />
     <ClInclude Include="..\snownet-src\snownet_test.h" />
     <ClInclude Include="..\snownet-src\spinlock.h" />
@@ -83,18 +123,19 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5_Win64_dllw6_lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rd\lua-5.3.5_Win64_dllw6_lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>liblua53.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rd\lua-5.3.5\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>lua-5.3.5.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)3rd\lua-5.3.5_Win64_dllw6_lib\lua53.dll $(OutDir)lua53.dll /y</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -104,20 +145,21 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5_Win64_dllw6_lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)3rd\lua-5.3.5_Win64_dllw6_lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>liblua53.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rd\lua-5.3.5\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>lua-5.3.5.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)3rd\lua-5.3.5_Win64_dllw6_lib\lua53.dll $(OutDir)lua53.dll /y</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

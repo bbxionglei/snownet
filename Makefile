@@ -8,20 +8,20 @@ CSERVICE_PATH ?= cservice
 
 SNOWNET_BUILD_PATH ?= ../bin
 
-CFLAGS = -g -O0 -Wall -std=c++11
+CFLAGS = -g -O0 -Wall -std=c++11 -I$(LUA_INC)
 #CFLAGS = -g -O0 -Wall -I$(LUA_INC) $(MYCFLAGS)
 #CFLAGS = -g -O2 -Wall -I$(LUA_INC) $(MYCFLAGS)
 # CFLAGS += -DUSE_PTHREAD_LOCK
 
 # lua
 
-#LUA_STATICLIB := 3rd/lua/liblua.a
-#LUA_LIB ?= $(LUA_STATICLIB)
-#LUA_INC ?= 3rd/lua
+LUA_STATICLIB := 3rd/lua-5.3.5/liblua.a
+LUA_LIB ?= $(LUA_STATICLIB)
+LUA_INC ?= 3rd/lua-5.3.5
 
-#$(LUA_STATICLIB) :
-	#@echo "LUA_STATICLIB $(LUA_STATICLIB)"
-	#cd 3rd/lua && $(MAKE) CC='$(CC) -std=gnu99' $(PLAT)
+$(LUA_STATICLIB) :
+	@echo "LUA_STATICLIB $(LUA_STATICLIB)"
+	cd 3rd/lua-5.3.5 && $(MAKE) CC='$(CC) -std=gnu99' $(PLAT)
 
 # jemalloc 
 
@@ -58,7 +58,7 @@ LUA_CLIB = snownet \
 LUA_CLIB_SNOWNET = 
 
 SNOWNET_SRC = \
-	snownet_main.cc snownet_test.cc 
+	snownet_main.cc snownet_test.cc snownet_env.cc
 
 all : 
 	@echo -e "\033[36m before all \033[0m"

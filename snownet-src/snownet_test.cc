@@ -57,12 +57,12 @@ test_function() {
 		std::shared_future<int> shared_fut = fut.share();
 
 		int x = shared_fut.get();         // retrieve return value
-		int y = shared_fut.get();         // retrieve return value
+		//int y = shared_fut.get();         // retrieve return value
 
 		std::cout << "\n444444443 " << (x ? "is" : "is not") << " prime.\n";
 
 	}
-	{
+	/*{
 		std::vector < std::thread > threads;
 		threads.push_back(std::thread(append_number, 88));
 		for (int i = 1; i <= 10; ++i)
@@ -79,7 +79,7 @@ test_function() {
 		_3_ready = true;
 		for (auto& th : threads) th.join();
 	}
-
+*/
 	return 0;
 }
 	

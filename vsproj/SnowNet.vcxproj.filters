@@ -28,6 +28,9 @@
     <Filter Include="3rd\lua">
       <UniqueIdentifier>{71727fc6-70ea-4eca-b91b-6a5afb6e876a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="examples\login">
+      <UniqueIdentifier>{f8fe38d4-5ab9-4957-b9e4-9fb7045b6ab1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\snownet-src\snownet_test.cc">
@@ -37,6 +40,9 @@
       <Filter>snownet-src</Filter>
     </ClCompile>
     <ClCompile Include="..\snownet-src\malloc_hook.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_env.cc">
       <Filter>snownet-src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -52,6 +58,117 @@
     </None>
     <None Include="..\README.md">
       <Filter>res</Filter>
+    </None>
+    <None Include="..\examples\abort.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\agent.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\checkdeadloop.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\client.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\cluster1.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\cluster2.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\clustername.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config.c1">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config.c2">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config.login">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config.mc">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config.mongodb">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config.mysql">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config.path">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config.userlog">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\config_log">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\globallog.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\injectlaunch.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\main.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\main_log.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\main_mongodb.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\main_mysql.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\preload.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\proto.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\protoloader.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\share.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\simpledb.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\simplemonitor.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\simpleweb.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\userlog.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\watchdog.lua">
+      <Filter>examples</Filter>
+    </None>
+    <None Include="..\examples\login\client.lua">
+      <Filter>examples\login</Filter>
+    </None>
+    <None Include="..\examples\login\gated.lua">
+      <Filter>examples\login</Filter>
+    </None>
+    <None Include="..\examples\login\logind.lua">
+      <Filter>examples\login</Filter>
+    </None>
+    <None Include="..\examples\login\main.lua">
+      <Filter>examples\login</Filter>
+    </None>
+    <None Include="..\examples\login\msgagent.lua">
+      <Filter>examples\login</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -70,25 +187,31 @@
     <ClInclude Include="..\snownet-src\snownet_malloc.h">
       <Filter>snownet-src</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lauxlib.h">
-      <Filter>3rd\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lua.h">
-      <Filter>3rd\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lua.hpp">
-      <Filter>3rd\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\luaconf.h">
-      <Filter>3rd\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\lua-5.3.5_Win64_dllw6_lib\include\lualib.h">
-      <Filter>3rd\lua</Filter>
-    </ClInclude>
     <ClInclude Include="..\snownet-src\rwlock.h">
       <Filter>snownet-src</Filter>
     </ClInclude>
     <ClInclude Include="..\snownet-src\spinlock.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_env.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5\lauxlib.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5\lua.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5\lua.hpp">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5\luaconf.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lua-5.3.5\lualib.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_imp.h">
       <Filter>snownet-src</Filter>
     </ClInclude>
   </ItemGroup>
