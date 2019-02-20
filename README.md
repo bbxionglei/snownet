@@ -3,7 +3,7 @@
 
 目的：支持windows、linux、freeBSD
 
-##中文译为：雪网
+## 中文译为：雪网
 
 
 
