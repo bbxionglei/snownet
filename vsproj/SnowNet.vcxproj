@@ -13,8 +13,15 @@
   <ItemGroup>
     <ClCompile Include="..\snownet-src\malloc_hook.cc" />
     <ClCompile Include="..\snownet-src\snownet_env.cc" />
+    <ClCompile Include="..\snownet-src\snownet_error.cc" />
+    <ClCompile Include="..\snownet-src\snownet_handle.cc" />
+    <ClCompile Include="..\snownet-src\snownet_log.cc" />
     <ClCompile Include="..\snownet-src\snownet_main.cc" />
+    <ClCompile Include="..\snownet-src\snownet_module.cc" />
+    <ClCompile Include="..\snownet-src\snownet_mq.cc" />
+    <ClCompile Include="..\snownet-src\snownet_server.cc" />
     <ClCompile Include="..\snownet-src\snownet_test.cc" />
+    <ClCompile Include="..\snownet-src\snownet_timer.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\examples\abort.lua" />
@@ -70,9 +77,15 @@
     <ClInclude Include="..\snownet-src\rwlock.h" />
     <ClInclude Include="..\snownet-src\snownet.h" />
     <ClInclude Include="..\snownet-src\snownet_env.h" />
+    <ClInclude Include="..\snownet-src\snownet_handle.h" />
     <ClInclude Include="..\snownet-src\snownet_imp.h" />
+    <ClInclude Include="..\snownet-src\snownet_log.h" />
     <ClInclude Include="..\snownet-src\snownet_malloc.h" />
+    <ClInclude Include="..\snownet-src\snownet_module.h" />
+    <ClInclude Include="..\snownet-src\snownet_mq.h" />
+    <ClInclude Include="..\snownet-src\snownet_server.h" />
     <ClInclude Include="..\snownet-src\snownet_test.h" />
+    <ClInclude Include="..\snownet-src\snownet_timer.h" />
     <ClInclude Include="..\snownet-src\spinlock.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

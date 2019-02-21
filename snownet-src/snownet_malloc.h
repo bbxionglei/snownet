@@ -2,6 +2,7 @@
 #define snownet_malloc_h
 
 #include <stddef.h>
+#include <stdlib.h>
 
 #define snownet_malloc malloc
 #define snownet_calloc calloc

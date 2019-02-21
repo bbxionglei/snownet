@@ -58,7 +58,10 @@ LUA_CLIB = snownet \
 LUA_CLIB_SNOWNET = 
 
 SNOWNET_SRC = \
-	snownet_main.cc snownet_test.cc snownet_env.cc
+	snownet_main.cc snownet_test.cc snownet_env.cc \
+	snownet_timer.cc snownet_server.cc snownet_log.cc \
+	snownet_handle.cc snownet_error.cc malloc_hook.cc \
+	snownet_mq.cc snownet_module.cc
 
 all : 
 	@echo -e "\033[36m before all \033[0m"

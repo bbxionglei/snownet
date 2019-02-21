@@ -9,42 +9,39 @@ struct rwlock {
 
 static inline void
 rwlock_init(struct rwlock *lock) {
-	atomic_init(lock->write, 0);
-	atomic_init(lock->read, 0);
-	
+	lock->write.store(0);
+	lock->read.store(0);
 }
 
 static inline void
 rwlock_rlock(struct rwlock *lock) {
-	//for (;;) {
-	//	while(lock->write) {
-	//		__sync_synchronize();
-	//	}
-	//	__sync_add_and_fetch(&lock->read,1);
-	//	if (lock->write) {
-	//		__sync_sub_and_fetch(&lock->read,1);
-	//	} else {
-	//		break;
-	//	}
-	//}
+	for (;;) {
+		while (lock->write)
+			lock->write.load();
+		lock->read++;
+		if (lock->write) {
+			lock->read--;
+		}
+		else {
+			break;
+		}
+	}
 }
 
 static inline void
 rwlock_wlock(struct rwlock *lock) {
-	//while (__sync_lock_test_and_set(&lock->write,1)) {}
-	//while(lock->read) {
-	//	__sync_synchronize();
-	//}
+	while (!lock->write)lock->write++;
+	while (lock->read)lock->read.load();
 }
 
 static inline void
 rwlock_wunlock(struct rwlock *lock) {
-	//__sync_lock_release(&lock->write);
+	lock->write--;
 }
 
 static inline void
 rwlock_runlock(struct rwlock *lock) {
-	//__sync_sub_and_fetch(&lock->read,1);
+	lock->read--;
 }
 
 #endif//SNOWNET_RWLOCK_H

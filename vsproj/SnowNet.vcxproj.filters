@@ -45,6 +45,27 @@
     <ClCompile Include="..\snownet-src\snownet_env.cc">
       <Filter>snownet-src</Filter>
     </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_handle.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_log.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_server.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_error.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_timer.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_mq.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_module.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LICENSE">
@@ -212,6 +233,24 @@
       <Filter>3rd\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\snownet-src\snownet_imp.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_handle.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_log.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_server.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_timer.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_mq.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_module.h">
       <Filter>snownet-src</Filter>
     </ClInclude>
   </ItemGroup>

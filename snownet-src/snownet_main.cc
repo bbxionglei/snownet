@@ -4,6 +4,8 @@
 #include "snownet_test.h"
 #include "snownet_env.h"
 #include "snownet_imp.h"
+#include "snownet_timer.h"
+#include "snownet_server.h"
 
 
 #include <stdio.h>
@@ -153,9 +155,8 @@ main(int argc, char *argv[]) {
 			"usage: snownet configfilename\n");
 		return 1;
 	}
-
 	//luaS_initshr();
-	//snownet_globalinit();
+	snownet_globalinit();
 	snownet_env_init();
 
 	sigign();
@@ -192,7 +193,7 @@ main(int argc, char *argv[]) {
 
 	//snownet_start(&config);
 
-	//snownet_globalexit();
+	snownet_globalexit();
 	//luaS_exitshr();
 	printf("hello snownet 2>>>>>\n");
 	return 0;
