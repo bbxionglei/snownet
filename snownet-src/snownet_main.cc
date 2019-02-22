@@ -6,6 +6,7 @@
 #include "snownet_imp.h"
 #include "snownet_timer.h"
 #include "snownet_server.h"
+#include "luashrtbl.h"
 
 
 #include <stdio.h>
@@ -15,6 +16,8 @@
 #include <signal.h>
 #include <assert.h>
 #include <assert.h>
+#include "socket_server.h"
+
 
 struct skynet_env {
 	struct spinlock lock;
@@ -144,7 +147,7 @@ main(int argc, char *argv[]) {
 		i++;
 	}
 	test_function();
-
+	socket_server_create(0);
 
 	const char * config_file = NULL;
 	if (argc > 1) {
@@ -155,12 +158,11 @@ main(int argc, char *argv[]) {
 			"usage: snownet configfilename\n");
 		return 1;
 	}
-	//luaS_initshr();
+	luaS_initshr();
 	snownet_globalinit();
 	snownet_env_init();
 
 	sigign();
-
 	struct snownet_config config;
 
 	struct lua_State *L = luaL_newstate();
@@ -194,7 +196,7 @@ main(int argc, char *argv[]) {
 	//snownet_start(&config);
 
 	snownet_globalexit();
-	//luaS_exitshr();
+	luaS_exitshr();
 	printf("hello snownet 2>>>>>\n");
 	return 0;
 }

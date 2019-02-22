@@ -66,6 +66,24 @@
     <ClCompile Include="..\snownet-src\snownet_module.cc">
       <Filter>snownet-src</Filter>
     </ClCompile>
+    <ClCompile Include="..\snownet-src\socket_server.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_harbor.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_monitor.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_socket.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_start.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\snownet-src\snownet_daemon.cc">
+      <Filter>snownet-src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LICENSE">
@@ -251,6 +269,42 @@
       <Filter>snownet-src</Filter>
     </ClInclude>
     <ClInclude Include="..\snownet-src\snownet_module.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\luashrtbl.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\socket_epoll.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\socket_info.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\socket_kqueue.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\socket_poll.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\socket_server.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\socket_select.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\socket_pipe.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_harbor.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_monitor.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_socket.h">
+      <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\snownet-src\snownet_daemon.h">
       <Filter>snownet-src</Filter>
     </ClInclude>
   </ItemGroup>

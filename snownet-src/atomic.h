@@ -14,7 +14,7 @@
 //#else
 #include <atomic>
 
-#define ATOM_CAS(atom, oval, n) std::atomic_compare_exchange_strong(atom, oval, n)
+#define ATOM_CAS(atom, oval, n) (atom)->compare_exchange_strong(oval, n)
 #define ATOM_ADD(atom,n) std::atomic_fetch_add(atom, n)
 #define ATOM_INC(atom) std::atomic_fetch_add(atom, 1)
 

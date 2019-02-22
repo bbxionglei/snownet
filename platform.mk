@@ -19,7 +19,7 @@ none :
 	@echo "Please do 'make PLATFORM' where PLATFORM is one of these:"
 	@echo "   $(PLATS)"
 
-SNOWNET_LIBS := -lpthread -lm -Wno-unused-function
+SNOWNET_LIBS := -lpthread -lm -Wno-unused-function -Wno-write-strings -Wno-sign-compare
 SHARED := -fPIC --shared
 EXPORT := -Wl,-E
 

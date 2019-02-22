@@ -6,6 +6,8 @@
 #include <sstream>                // std::stringstream
 
 
+#include "socket_poll.h"
+
 int
 is_prime(int x)
 {
@@ -41,8 +43,33 @@ void count1m(int id)
 	if (!_3_winner.exchange(true)) { std::cout << "thread #" << id << " won!\n"; }
 };
 
+class test_class_a {
+public:
+	test_class_a() {
+		a = 1;
+		b = 1;
+
+	}
+	~test_class_a() {
+		a = 2;
+		b = 2;
+	}
+	int a;
+	int b;
+};
+
 int
 test_function() {
+	//new ѧϰ
+	test_class_a a1;
+	test_class_a* a2 = new test_class_a();
+	char *a3ptr = new char[128]{ 0 };
+	test_class_a* a3 = new (a3ptr) test_class_a();
+	//test_class_a* a4 = new (a2) test_class_a();
+	delete a2;
+	delete a3;
+	sp_invalid(0);
+
 	printf("hello test_function\n");
 	{
 		// call function asynchronously:

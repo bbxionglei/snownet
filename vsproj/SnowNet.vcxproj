@@ -12,16 +12,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\snownet-src\malloc_hook.cc" />
+    <ClCompile Include="..\snownet-src\snownet_daemon.cc" />
     <ClCompile Include="..\snownet-src\snownet_env.cc" />
     <ClCompile Include="..\snownet-src\snownet_error.cc" />
     <ClCompile Include="..\snownet-src\snownet_handle.cc" />
+    <ClCompile Include="..\snownet-src\snownet_harbor.cc" />
     <ClCompile Include="..\snownet-src\snownet_log.cc" />
     <ClCompile Include="..\snownet-src\snownet_main.cc" />
     <ClCompile Include="..\snownet-src\snownet_module.cc" />
+    <ClCompile Include="..\snownet-src\snownet_monitor.cc" />
     <ClCompile Include="..\snownet-src\snownet_mq.cc" />
     <ClCompile Include="..\snownet-src\snownet_server.cc" />
+    <ClCompile Include="..\snownet-src\snownet_socket.cc" />
+    <ClCompile Include="..\snownet-src\snownet_start.cc" />
     <ClCompile Include="..\snownet-src\snownet_test.cc" />
     <ClCompile Include="..\snownet-src\snownet_timer.cc" />
+    <ClCompile Include="..\snownet-src\socket_server.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\examples\abort.lua" />
@@ -73,19 +79,31 @@
     <ClInclude Include="..\3rd\lua-5.3.5\luaconf.h" />
     <ClInclude Include="..\3rd\lua-5.3.5\lualib.h" />
     <ClInclude Include="..\snownet-src\atomic.h" />
+    <ClInclude Include="..\snownet-src\luashrtbl.h" />
     <ClInclude Include="..\snownet-src\malloc_hook.h" />
     <ClInclude Include="..\snownet-src\rwlock.h" />
     <ClInclude Include="..\snownet-src\snownet.h" />
+    <ClInclude Include="..\snownet-src\snownet_daemon.h" />
     <ClInclude Include="..\snownet-src\snownet_env.h" />
     <ClInclude Include="..\snownet-src\snownet_handle.h" />
+    <ClInclude Include="..\snownet-src\snownet_harbor.h" />
     <ClInclude Include="..\snownet-src\snownet_imp.h" />
     <ClInclude Include="..\snownet-src\snownet_log.h" />
     <ClInclude Include="..\snownet-src\snownet_malloc.h" />
     <ClInclude Include="..\snownet-src\snownet_module.h" />
+    <ClInclude Include="..\snownet-src\snownet_monitor.h" />
     <ClInclude Include="..\snownet-src\snownet_mq.h" />
     <ClInclude Include="..\snownet-src\snownet_server.h" />
+    <ClInclude Include="..\snownet-src\snownet_socket.h" />
     <ClInclude Include="..\snownet-src\snownet_test.h" />
     <ClInclude Include="..\snownet-src\snownet_timer.h" />
+    <ClInclude Include="..\snownet-src\socket_epoll.h" />
+    <ClInclude Include="..\snownet-src\socket_info.h" />
+    <ClInclude Include="..\snownet-src\socket_pipe.h" />
+    <ClInclude Include="..\snownet-src\socket_select.h" />
+    <ClInclude Include="..\snownet-src\socket_kqueue.h" />
+    <ClInclude Include="..\snownet-src\socket_poll.h" />
+    <ClInclude Include="..\snownet-src\socket_server.h" />
     <ClInclude Include="..\snownet-src\spinlock.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -137,14 +155,14 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)3rd\lua-5.3.5\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>lua-5.3.5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>lua-5.3.5.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -159,7 +177,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -168,7 +186,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)3rd\lua-5.3.5\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>lua-5.3.5.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>lua-5.3.5.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
