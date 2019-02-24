@@ -1,6 +1,7 @@
 #ifndef SNOWNET_IMP_H
 #define SNOWNET_IMP_H
 
+//TODO ≤‚ ‘
 struct snownet_config {
 	int thread;
 	int harbor;

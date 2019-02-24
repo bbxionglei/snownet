@@ -1,6 +1,7 @@
 #ifndef SNOWNET_MODULE_H
 #define SNOWNET_MODULE_H
 
+//TODO ≤‚ ‘
 struct snownet_context;
 
 typedef void * (*snownet_dl_create)(void);

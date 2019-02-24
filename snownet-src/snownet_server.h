@@ -1,6 +1,7 @@
 #ifndef SNOWNET_SERVER_H
 #define SNOWNET_SERVER_H
 
+//TODO ≤‚ ‘
 #include <stdint.h>
 #include <stdlib.h>
 

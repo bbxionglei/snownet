@@ -1,6 +1,7 @@
 #ifndef snownet_socket_server_h
 #define snownet_socket_server_h
 
+//TODO ≤‚ ‘
 #include <stdint.h>
 #include "socket_info.h"
 

@@ -1,6 +1,7 @@
 #ifndef snownet_socket_h
 #define snownet_socket_h
 
+//TODO ≤‚ ‘
 #include "socket_info.h"
 
 struct snownet_context;

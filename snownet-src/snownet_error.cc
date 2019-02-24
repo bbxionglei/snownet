@@ -10,6 +10,7 @@
 
 #define LOG_MESSAGE_SIZE 256
 
+//TODO ≤‚ ‘
 void 
 snownet_error(struct snownet_context * context, const char *msg, ...) {
 	static uint32_t logger = 0;

@@ -45,7 +45,8 @@ struct snownet_context {
 	void * cb_ud;
 	snownet_cb cb;
 	struct message_queue *queue;
-	FILE * logfile;
+	//FILE * logfile; //TODO 为什么要设计成原子操作
+	std::atomic<int64_t> logfile;
 	uint64_t cpu_cost;	// in microsec
 	uint64_t cpu_start;	// in microsec
 	char result[32];
@@ -211,7 +212,7 @@ snownet_context_reserve(struct snownet_context *ctx) {
 static void 
 delete_context(struct snownet_context *ctx) {
 	if (ctx->logfile) {
-		fclose(ctx->logfile);
+		fclose((FILE*)(int64_t)(ctx->logfile));
 	}
 	snownet_module_instance_release(ctx->mod, ctx->instance);
 	snownet_mq_mark_release(ctx->queue);
@@ -271,7 +272,7 @@ dispatch_message(struct snownet_context *ctx, struct snownet_message *msg) {
 	int type = msg->sz >> MESSAGE_TYPE_SHIFT;
 	size_t sz = msg->sz & MESSAGE_TYPE_MASK;
 	if (ctx->logfile) {
-		snownet_log_output(ctx->logfile, msg->source, type, msg->session, msg->data, sz);
+		snownet_log_output((FILE*)(int64_t)(ctx->logfile), msg->source, type, msg->session, msg->data, sz);
 	}
 	++ctx->message_count;
 	int reserve_msg;
@@ -633,15 +634,16 @@ cmd_logon(struct snownet_context * context, const char * param) {
 	if (ctx == NULL)
 		return NULL;
 	FILE *f = NULL;
-	FILE * lastf = ctx->logfile;
+	FILE * lastf = (FILE*)(int64_t)(ctx->logfile);
 	if (lastf == NULL) {
 		f = snownet_log_open(context, handle);
 		if (f) {
-			//TODO
-			//if (!ATOM_CAS_POINTER(&ctx->logfile, NULL, f)) {
-			//	// logfile opens in other thread, close this one.
-			//	fclose(f);
-			//}
+			int64_t intf = (int64_t)f;
+			int64_t int0 = NULL;
+			if (!ATOM_CAS(&ctx->logfile, int0, intf)) {
+				// logfile opens in other thread, close this one.
+				fclose(f);
+			}
 		}
 	}
 	snownet_context_release(ctx);
@@ -656,13 +658,13 @@ cmd_logoff(struct snownet_context * context, const char * param) {
 	struct snownet_context * ctx = snownet_handle_grab(handle);
 	if (ctx == NULL)
 		return NULL;
-	FILE * f = ctx->logfile;
+	FILE * f = (FILE*)(int64_t)(ctx->logfile);
 	if (f) {
-		//TODO
 		// logfile may close in other thread
-		//if (ATOM_CAS_POINTER(&ctx->logfile, f, NULL)) {
-		//	snownet_log_close(context, f, handle);
-		//}
+		int64_t intf = (int64_t)f;
+		if (ATOM_CAS(&ctx->logfile, intf, NULL)) {
+			snownet_log_close(context, f, handle);
+		}
 	}
 	snownet_context_release(ctx);
 	return NULL;

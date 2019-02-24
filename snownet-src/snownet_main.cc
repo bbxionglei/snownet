@@ -146,8 +146,8 @@ main(int argc, char *argv[]) {
 		int i = 0;
 		i++;
 	}
-	test_function();
 	socket_server_create(0);
+	test_function();
 
 	const char * config_file = NULL;
 	if (argc > 1) {

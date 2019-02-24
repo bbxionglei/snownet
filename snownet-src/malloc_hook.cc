@@ -7,7 +7,6 @@
 
 #include "malloc_hook.h"
 #include "snownet.h"
-#include "atomic.h"
 
 // turn on MEMORY_CHECK can do more memory check, such as double free
 // #define MEMORY_CHECK

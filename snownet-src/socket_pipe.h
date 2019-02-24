@@ -36,7 +36,7 @@ int CreateSocketLikePipe(int nPortNo, int fd[2])
 		// 创建socket
 		iSockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 		if (iSockfd == -1) {
-			printf(" CreateSocketLikePipe 创建socket失败");
+			printf(" CreateSocketLikePipe create socket error\n");
 			break;
 		}
 
@@ -49,26 +49,26 @@ int CreateSocketLikePipe(int nPortNo, int fd[2])
 		// 绑定
 		iSts = bind(iSockfd, (struct sockaddr*)&srcAddr, sizeof(srcAddr));
 		if (iSts != 0) {
-			printf(" CreateSocketLikePipe bind失败");
+			printf(" CreateSocketLikePipe bind error\n");
 			break;
 		}
 
 		// 监听
 		iSts = listen(iSockfd, 1);
 		if (iSts != 0) {
-			printf(" CreateSocketLikePipe listen失败");
+			printf(" CreateSocketLikePipe listen error\n");
 			break;
 		}
 		// 地址取得
 		iSts = getsockname(iSockfd, (struct sockaddr *)&dstAddr, &iSocklen);
 		if (iSts != 0) {
-			printf(" CreateSocketLikePipe getsockname失败");
+			printf(" CreateSocketLikePipe getsockname error\n");
 			break;
 		}
 		// WinSock初始化
 		fd[1] = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 		if (fd[1] == -1) {
-			printf(" CreateSocketLikePipe nPipe[1] socket 生成失败");
+			printf(" CreateSocketLikePipe nPipe[1] socket  error\n");
 			break;
 		}
 
@@ -82,7 +82,7 @@ int CreateSocketLikePipe(int nPortNo, int fd[2])
 		if (iSts == -1) {
 			lTemp = WSAGetLastError();
 			if ((lTemp != WSAEWOULDBLOCK) && (lTemp != WSAEINPROGRESS)) {
-				printf(" CreateSocketLikePipe connect失败");
+				printf(" CreateSocketLikePipe connect error\n");
 				break;
 			}
 		}
@@ -90,7 +90,7 @@ int CreateSocketLikePipe(int nPortNo, int fd[2])
 		// 接受连接，生成新的socket ID
 		fd[0] = (int)accept(iSockfd, (struct sockaddr *)&srcAddr, &iSocklen);
 		if (fd[0] == -1) {
-			printf(" CreateSocketLikePipe accept失败");
+			printf(" CreateSocketLikePipe accept error\n");
 			break;
 		}
 		// 去掉socket的阻塞

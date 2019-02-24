@@ -1,16 +1,10 @@
 #include "snownet_log.h"
 #include "snownet_timer.h"
 #include "snownet.h"
-//#include "snownet_socket.h" //TODO
+#include "snownet_socket.h"
 #include <string.h>
 #include <time.h>
-//TODO 删除此处定义
-struct snownet_socket_message {
-	int type;
-	int id;
-	int ud;
-	char * buffer;
-};
+
 
 FILE * 
 snownet_log_open(struct snownet_context * ctx, uint32_t handle) {
