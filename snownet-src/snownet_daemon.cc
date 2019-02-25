@@ -1,11 +1,13 @@
 #include <stdio.h>
-//#include <unistd.h>
 #include <sys/types.h>
-//#include <sys/file.h>
 #include <signal.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#ifndef _WIN32
+#include <sys/file.h>
+#include <unistd.h>
+#endif
 
 #include "snownet_daemon.h"
 
@@ -126,7 +128,9 @@ daemon_init(const char *pidfile) {
 
 int
 daemon_exit(const char *pidfile) {
-	//TODO
-	//return unlink(pidfile);
+#ifdef _WIN32
 	return 0;
+#else
+	return unlink(pidfile);
+#endif
 }

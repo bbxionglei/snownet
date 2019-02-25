@@ -6,9 +6,9 @@ include platform.mk
 LUA_CLIB_PATH ?= luaclib
 CSERVICE_PATH ?= cservice
 
-SNOWNET_BUILD_PATH ?= ../bin
+SNOWNET_BUILD_PATH ?= ./
 
-CFLAGS = -g -O0 -Wall -std=c++11 -I$(LUA_INC)
+CFLAGS = -g -O0 -gstabs+ -Wall -std=c++11 -I$(LUA_INC)
 #CFLAGS = -g -O0 -Wall -I$(LUA_INC) $(MYCFLAGS)
 #CFLAGS = -g -O2 -Wall -I$(LUA_INC) $(MYCFLAGS)
 # CFLAGS += -DUSE_PTHREAD_LOCK
@@ -64,6 +64,14 @@ SNOWNET_SRC = \
 	snownet_monitor.cc snownet_mq.cc snownet_server.cc \
 	snownet_socket.cc snownet_start.cc snownet_test.cc \
 	snownet_timer.cc socket_server.cc 
+	
+SNOWNET_SRC = \
+	snownet_main.cc malloc_hook.cc snownet_daemon.cc \
+	snownet_env.cc snownet_error.cc snownet_handle.cc \
+	snownet_harbor.cc snownet_log.cc snownet_module.cc \
+	snownet_monitor.cc snownet_mq.cc snownet_server.cc \
+	snownet_socket.cc snownet_start.cc snownet_test.cc \
+	snownet_timer.cc socket_server.cc 
 
 all : 
 	@echo -e "\033[36m before all \033[0m"
@@ -72,8 +80,8 @@ all :
 	#$(foreach v, $(LUA_CLIB), $(LUA_CLIB_PATH)/$(v).so) 
 	#$(MAKE) $(foreach v, $(CSERVICE), $(CSERVICE_PATH)/$(v).so) 
 	@echo -e "\033[36m after  all \033[0m"
-
-$(SNOWNET_BUILD_PATH)/snownet : $(foreach v, $(SNOWNET_SRC), snownet-src/$(v)) $(LUA_LIB) $(MALLOC_STATICLIB)
+	
+$(SNOWNET_BUILD_PATH)/snownet : $(foreach v, $(SNOWNET_SRC), snownet-src/$(v)) $(LUA_LIB) $(MALLOC_STATICLIB) $(foreach v, $(CSERVICE), service-src/service_$(v).cc)
 	@echo -e "\033[32m before snownet \033[0m"
 	@echo $(foreach v, $(SNOWNET_SRC), snownet-src/$(v))
 	$(CC) $(CFLAGS) -o $@ $^ -Isnownet-src -I$(JEMALLOC_INC) $(LDFLAGS) $(EXPORT) $(SNOWNET_LIBS) $(SNOWNET_DEFINES)
@@ -98,23 +106,23 @@ $(LUA_CLIB_PATH)/snownet.so : $(addprefix lualib-src/,$(LUA_CLIB_SNOWNET)) | $(L
 	@echo -e "\033[36m snownet.so \033[0m"
 	$(CC) $(CFLAGS) $(SHARED) $^ -o $@ -Isnownet-src -Iservice-src -Ilualib-src
 
-$(LUA_CLIB_PATH)/bson.so : lualib-src/lua-bson.cc | $(LUA_CLIB_PATH)
+$(LUA_CLIB_PATH)/bson.so : lualib-src/lua-bson.c | $(LUA_CLIB_PATH)
 	@echo -e "\033[36m bson.so \033[0m"
 	$(CC) $(CFLAGS) $(SHARED) -Isnownet-src $^ -o $@ -Isnownet-src
 
-$(LUA_CLIB_PATH)/md5.so : 3rd/lua-md5/md5.cc 3rd/lua-md5/md5lib.cc 3rd/lua-md5/compat-5.2.cc | $(LUA_CLIB_PATH)
+$(LUA_CLIB_PATH)/md5.so : 3rd/lua-md5/md5.c 3rd/lua-md5/md5lib.c 3rd/lua-md5/compat-5.2.c | $(LUA_CLIB_PATH)
 	@echo -e "\033[36m md5.so \033[0m"
 	$(CC) $(CFLAGS) $(SHARED) -I3rd/lua-md5 $^ -o $@ 
 
-$(LUA_CLIB_PATH)/client.so : lualib-src/lua-clientsocket.cc lualib-src/lua-crypt.cc lualib-src/lsha1.cc | $(LUA_CLIB_PATH)
+$(LUA_CLIB_PATH)/client.so : lualib-src/lua-clientsocket.c lualib-src/lua-crypt.c lualib-src/lsha1.c | $(LUA_CLIB_PATH)
 	@echo -e "\033[36m client.so \033[0m"
 	$(CC) $(CFLAGS) $(SHARED) $^ -o $@ -lpthread
 
-$(LUA_CLIB_PATH)/sproto.so : lualib-src/sproto/sproto.cc lualib-src/sproto/lsproto.cc | $(LUA_CLIB_PATH)
+$(LUA_CLIB_PATH)/sproto.so : lualib-src/sproto/sproto.c lualib-src/sproto/lsproto.c | $(LUA_CLIB_PATH)
 	@echo -e "\033[36m sproto.so \033[0m"
 	$(CC) $(CFLAGS) $(SHARED) -Ilualib-src/sproto $^ -o $@ 
 
-$(LUA_CLIB_PATH)/lpeg.so : 3rd/lpeg/lpcap.cc 3rd/lpeg/lpcode.cc 3rd/lpeg/lpprint.cc 3rd/lpeg/lptree.cc 3rd/lpeg/lpvm.cc | $(LUA_CLIB_PATH)
+$(LUA_CLIB_PATH)/lpeg.so : 3rd/lpeg/lpcap.c 3rd/lpeg/lpcode.c 3rd/lpeg/lpprint.c 3rd/lpeg/lptree.c 3rd/lpeg/lpvm.cc | $(LUA_CLIB_PATH)
 	@echo -e "\033[36m lpeg.so \033[0m"
 	$(CC) $(CFLAGS) $(SHARED) -I3rd/lpeg $^ -o $@ 
 

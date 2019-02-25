@@ -193,7 +193,7 @@ main(int argc, char *argv[]) {
 
 	lua_close(L);
 
-	//snownet_start(&config);
+	snownet_start(&config);
 
 	snownet_globalexit();
 	luaS_exitshr();

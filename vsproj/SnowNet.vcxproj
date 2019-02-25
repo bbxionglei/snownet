@@ -11,6 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\service-src\service_gate.cc" />
+    <ClCompile Include="..\service-src\service_harbor.cc" />
+    <ClCompile Include="..\service-src\service_logger.cc" />
+    <ClCompile Include="..\service-src\service_snlua.cc" />
     <ClCompile Include="..\snownet-src\malloc_hook.cc" />
     <ClCompile Include="..\snownet-src\snownet_daemon.cc" />
     <ClCompile Include="..\snownet-src\snownet_env.cc" />
@@ -78,6 +82,8 @@
     <ClInclude Include="..\3rd\lua-5.3.5\lua.hpp" />
     <ClInclude Include="..\3rd\lua-5.3.5\luaconf.h" />
     <ClInclude Include="..\3rd\lua-5.3.5\lualib.h" />
+    <ClInclude Include="..\service-src\databuffer.h" />
+    <ClInclude Include="..\service-src\hashid.h" />
     <ClInclude Include="..\snownet-src\atomic.h" />
     <ClInclude Include="..\snownet-src\luashrtbl.h" />
     <ClInclude Include="..\snownet-src\malloc_hook.h" />
@@ -156,7 +162,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;$(SolutionDir)snownet-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -178,7 +184,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;$(SolutionDir)snownet-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

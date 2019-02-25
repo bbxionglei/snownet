@@ -34,3 +34,4 @@
 .vs
 .suo
 *.vcxproj.user
+/snownet

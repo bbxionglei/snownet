@@ -84,6 +84,18 @@
     <ClCompile Include="..\snownet-src\snownet_daemon.cc">
       <Filter>snownet-src</Filter>
     </ClCompile>
+    <ClCompile Include="..\service-src\service_gate.cc">
+      <Filter>service-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\service-src\service_harbor.cc">
+      <Filter>service-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\service-src\service_logger.cc">
+      <Filter>service-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\service-src\service_snlua.cc">
+      <Filter>service-src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LICENSE">
@@ -306,6 +318,12 @@
     </ClInclude>
     <ClInclude Include="..\snownet-src\snownet_daemon.h">
       <Filter>snownet-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\service-src\databuffer.h">
+      <Filter>service-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\service-src\hashid.h">
+      <Filter>service-src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

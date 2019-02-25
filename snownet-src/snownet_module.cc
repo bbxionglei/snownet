@@ -16,6 +16,40 @@
 #include <dlfcn.h>
 #endif
 
+extern void *logger_create(void);
+extern int logger_init(void * inst, struct snownet_context *ctx, const char * parm);
+extern void logger_release(void * inst);
+
+extern void * snlua_create(void);
+extern int snlua_init(void *l, struct snownet_context *ctx, const char * args);
+extern void snlua_release(void *l);
+extern void snlua_signal(void *l, int signal);
+
+extern void * harbor_create(void);
+extern int harbor_init(void *h, struct snownet_context *ctx, const char * args);
+extern void harbor_release(void *l);
+
+extern void * gate_create(void);
+extern int gate_init(void *g, struct snownet_context *ctx, const char * parm);
+extern void gate_release(void *g);
+
+struct model_st {
+	char name[64];
+	snownet_dl_create create;
+	snownet_dl_init init;
+	snownet_dl_release release;
+	snownet_dl_signal signal;
+};
+
+#define USE_MODEL_IN
+#define MAX_MODULE_NUMBER 4
+model_st g_st_model[MAX_MODULE_NUMBER] = {
+	model_st{"logger",logger_create,logger_init,logger_release,0},
+	model_st{"snlua",snlua_create,snlua_init,snlua_release,snlua_signal},
+	model_st{"harbor",harbor_create,harbor_init,harbor_release,0},
+	model_st{"gate",gate_create,gate_init,gate_release,0},
+};
+
 
 #define MAX_MODULE_TYPE 32
 
@@ -66,6 +100,7 @@ _try_open(struct modules *m, const char * name) {
 #ifdef _WIN32
 		dl = LoadLibraryA(tmp);
 #else
+		//dl = dlopen(tmp, RTLD_NOW | RTLD_GLOBAL);
 		dl = dlopen(tmp, RTLD_NOW | RTLD_GLOBAL);
 #endif
 		path = l;
@@ -73,12 +108,23 @@ _try_open(struct modules *m, const char * name) {
 	snownet_free(tmp);
 	if (dl == NULL) {
 #ifdef _WIN32
-		fprintf(stderr, "try open %s failed\n", name);
+		fprintf(stderr, "LoadLibraryA try open %s failed\n", name);
 #else
-		fprintf(stderr, "try open %s failed : %s\n", name, dlerror());
+		fprintf(stderr, "dlopen try open %s failed : %s\n", name, dlerror());
 #endif
 	}
 	return dl;
+}
+
+static void *
+_try_open_in(struct modules *m, const char * name) {
+	int i;
+	for (i = 0; i < MAX_MODULE_NUMBER; i++) {
+		if (strcmp(g_st_model[i].name, name) == 0) {
+			return &g_st_model[i];
+		}
+	}
+	return NULL;
 }
 
 static struct snownet_module * 
@@ -108,7 +154,7 @@ get_api(struct snownet_module *mod, const char *api_name) {
 	}
 	void * ret = NULL;
 #ifdef _WIN32
-	ret = GetProcAddress((HMODULE)mod->module, "myPuts");
+	ret = GetProcAddress((HMODULE)mod->module, ptr);
 #else
 	//dlsym 通过拼接的字符串找到对应的函数 snlua_create
 	ret = dlsym(mod->module, ptr);
@@ -119,10 +165,20 @@ get_api(struct snownet_module *mod, const char *api_name) {
 
 static int
 open_sym(struct snownet_module *mod) {
+#ifdef USE_MODEL_IN
+	if (mod != 0 && mod->module != 0) {
+		model_st* st = (model_st*)mod->module;
+		mod->create = st->create;
+		mod->init = st->init;
+		mod->release = st->release;
+		mod->signal = st->signal;
+	}
+#else
 	mod->create = (snownet_dl_create)get_api(mod, "_create");
 	mod->init = (snownet_dl_init)get_api(mod, "_init");
 	mod->release = (snownet_dl_release)get_api(mod, "_release");
 	mod->signal = (snownet_dl_signal)get_api(mod, "_signal");
+#endif
 
 	return mod->init == NULL;
 }
@@ -139,7 +195,11 @@ snownet_module_query(const char * name) {
 
 	if (result == NULL && M->count < MAX_MODULE_TYPE) {
 		int index = M->count;
-		void * dl = _try_open(M,name);
+#ifdef USE_MODEL_IN
+		void * dl = _try_open_in(M, name);
+#else
+		void * dl = _try_open(M, name);
+#endif
 		if (dl) {
 			M->m[index].name = name;
 			M->m[index].module = dl;

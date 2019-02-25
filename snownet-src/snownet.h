@@ -26,7 +26,6 @@
 #define PTYPE_TAG_ALLOCSESSION 0x20000
 
 struct snownet_context;
-
 void snownet_error(struct snownet_context * context, const char *msg, ...);
 const char * snownet_command(struct snownet_context * context, const char * cmd, const char * parm);
 uint32_t snownet_queryname(struct snownet_context * context, const char * name);
@@ -41,5 +40,4 @@ void snownet_callback(struct snownet_context * context, void *ud, snownet_cb cb)
 uint32_t snownet_current_handle(void);
 uint64_t snownet_now(void);
 void snownet_debug_memory(const char *info);	// for debug use, output current service memory to stderr
-
 #endif
