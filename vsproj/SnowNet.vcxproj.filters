@@ -221,6 +221,12 @@
     <None Include="..\examples\login\msgagent.lua">
       <Filter>examples\login</Filter>
     </None>
+    <None Include="..\.gitattributes">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\.gitignore">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\snownet-src\snownet_test.h">

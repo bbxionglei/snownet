@@ -34,6 +34,8 @@
     <ClCompile Include="..\snownet-src\socket_server.cc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.gitattributes" />
+    <None Include="..\.gitignore" />
     <None Include="..\examples\abort.lua" />
     <None Include="..\examples\agent.lua" />
     <None Include="..\examples\checkdeadloop.lua" />
