@@ -1,5 +1,5 @@
-#ifndef SKYNET_H
-#define SKYNET_H
+#ifndef SNOWNET_H
+#define SNOWNET_H
 
 //TODO ≤‚ ‘
 #include "snownet_malloc.h"

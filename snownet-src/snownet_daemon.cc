@@ -110,7 +110,7 @@ daemon_init(const char *pidfile) {
 	int pid = check_pid(pidfile);
 
 	if (pid) {
-		fprintf(stderr, "Skynet is already running, pid = %d.\n", pid);
+		fprintf(stderr, "snownet is already running, pid = %d.\n", pid);
 		return 1;
 	}
 

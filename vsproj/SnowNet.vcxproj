@@ -11,6 +11,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\lualib-src\lsha1.cc" />
+    <ClCompile Include="..\lualib-src\lua-bson.cc" />
+    <ClCompile Include="..\lualib-src\lua-clientsocket.cc" />
+    <ClCompile Include="..\lualib-src\lua-cluster.cc" />
+    <ClCompile Include="..\lualib-src\lua-crypt.cc" />
+    <ClCompile Include="..\lualib-src\lua-datasheet.cc" />
+    <ClCompile Include="..\lualib-src\lua-debugchannel.cc" />
+    <ClCompile Include="..\lualib-src\lua-memory.cc" />
+    <ClCompile Include="..\lualib-src\lua-mongo.cc" />
+    <ClCompile Include="..\lualib-src\lua-multicast.cc" />
+    <ClCompile Include="..\lualib-src\lua-netpack.cc" />
+    <ClCompile Include="..\lualib-src\lua-profile.cc" />
+    <ClCompile Include="..\lualib-src\lua-seri.cc" />
+    <ClCompile Include="..\lualib-src\lua-sharedata.cc" />
+    <ClCompile Include="..\lualib-src\lua-snownet.cc" />
+    <ClCompile Include="..\lualib-src\lua-socket.cc" />
+    <ClCompile Include="..\lualib-src\lua-stm.cc" />
+    <ClCompile Include="..\lualib-src\sproto\lsproto.cc" />
+    <ClCompile Include="..\lualib-src\sproto\sproto.cc" />
     <ClCompile Include="..\service-src\service_gate.cc" />
     <ClCompile Include="..\service-src\service_harbor.cc" />
     <ClCompile Include="..\service-src\service_logger.cc" />
@@ -74,9 +93,95 @@
     <None Include="..\examples\userlog.lua" />
     <None Include="..\examples\watchdog.lua" />
     <None Include="..\LICENSE" />
+    <None Include="..\lualib-src\sproto\README" />
+    <None Include="..\lualib-src\sproto\README.md" />
+    <None Include="..\lualib\compat10\cluster.lua" />
+    <None Include="..\lualib\compat10\crypt.lua" />
+    <None Include="..\lualib\compat10\datacenter.lua" />
+    <None Include="..\lualib\compat10\dns.lua" />
+    <None Include="..\lualib\compat10\memory.lua" />
+    <None Include="..\lualib\compat10\mongo.lua" />
+    <None Include="..\lualib\compat10\mqueue.lua" />
+    <None Include="..\lualib\compat10\multicast.lua" />
+    <None Include="..\lualib\compat10\mysql.lua" />
+    <None Include="..\lualib\compat10\netpack.lua" />
+    <None Include="..\lualib\compat10\profile.lua" />
+    <None Include="..\lualib\compat10\redis.lua" />
+    <None Include="..\lualib\compat10\sharedata.lua" />
+    <None Include="..\lualib\compat10\sharemap.lua" />
+    <None Include="..\lualib\compat10\snax.lua" />
+    <None Include="..\lualib\compat10\socket.lua" />
+    <None Include="..\lualib\compat10\socketchannel.lua" />
+    <None Include="..\lualib\compat10\socketdriver.lua" />
+    <None Include="..\lualib\compat10\stm.lua" />
+    <None Include="..\lualib\http\httpc.lua" />
+    <None Include="..\lualib\http\httpd.lua" />
+    <None Include="..\lualib\http\internal.lua" />
+    <None Include="..\lualib\http\sockethelper.lua" />
+    <None Include="..\lualib\http\url.lua" />
+    <None Include="..\lualib\loader.lua" />
+    <None Include="..\lualib\md5.lua" />
+    <None Include="..\lualib\snownet.lua" />
+    <None Include="..\lualib\snax\gateserver.lua" />
+    <None Include="..\lualib\snax\hotfix.lua" />
+    <None Include="..\lualib\snax\interface.lua" />
+    <None Include="..\lualib\snax\loginserver.lua" />
+    <None Include="..\lualib\snax\msgserver.lua" />
+    <None Include="..\lualib\snownet\cluster.lua" />
+    <None Include="..\lualib\snownet\coroutine.lua" />
+    <None Include="..\lualib\snownet\datacenter.lua" />
+    <None Include="..\lualib\snownet\datasheet\builder.lua" />
+    <None Include="..\lualib\snownet\datasheet\dump.lua" />
+    <None Include="..\lualib\snownet\datasheet\init.lua" />
+    <None Include="..\lualib\snownet\db\mongo.lua" />
+    <None Include="..\lualib\snownet\db\mysql.lua" />
+    <None Include="..\lualib\snownet\db\redis.lua" />
+    <None Include="..\lualib\snownet\db\redis\cluster.lua" />
+    <None Include="..\lualib\snownet\db\redis\crc16.lua" />
+    <None Include="..\lualib\snownet\debug.lua" />
+    <None Include="..\lualib\snownet\dns.lua" />
+    <None Include="..\lualib\snownet\harbor.lua" />
+    <None Include="..\lualib\snownet\inject.lua" />
+    <None Include="..\lualib\snownet\injectcode.lua" />
+    <None Include="..\lualib\snownet\manager.lua" />
+    <None Include="..\lualib\snownet\mqueue.lua" />
+    <None Include="..\lualib\snownet\multicast.lua" />
+    <None Include="..\lualib\snownet\queue.lua" />
+    <None Include="..\lualib\snownet\remotedebug.lua" />
+    <None Include="..\lualib\snownet\service.lua" />
+    <None Include="..\lualib\snownet\sharedata.lua" />
+    <None Include="..\lualib\snownet\sharedata\corelib.lua" />
+    <None Include="..\lualib\snownet\sharemap.lua" />
+    <None Include="..\lualib\snownet\snax.lua" />
+    <None Include="..\lualib\snownet\socket.lua" />
+    <None Include="..\lualib\snownet\socketchannel.lua" />
+    <None Include="..\lualib\sproto.lua" />
+    <None Include="..\lualib\sprotoloader.lua" />
+    <None Include="..\lualib\sprotoparser.lua" />
     <None Include="..\Makefile" />
     <None Include="..\platform.mk" />
     <None Include="..\README.md" />
+    <None Include="..\service\bootstrap.lua" />
+    <None Include="..\service\cdummy.lua" />
+    <None Include="..\service\clusteragent.lua" />
+    <None Include="..\service\clusterd.lua" />
+    <None Include="..\service\clusterproxy.lua" />
+    <None Include="..\service\cmaster.lua" />
+    <None Include="..\service\cmemory.lua" />
+    <None Include="..\service\console.lua" />
+    <None Include="..\service\cslave.lua" />
+    <None Include="..\service\datacenterd.lua" />
+    <None Include="..\service\dbg.lua" />
+    <None Include="..\service\debug_agent.lua" />
+    <None Include="..\service\debug_console.lua" />
+    <None Include="..\service\gate.lua" />
+    <None Include="..\service\launcher.lua" />
+    <None Include="..\service\multicastd.lua" />
+    <None Include="..\service\service_cell.lua" />
+    <None Include="..\service\service_mgr.lua" />
+    <None Include="..\service\service_provider.lua" />
+    <None Include="..\service\sharedatad.lua" />
+    <None Include="..\service\snaxd.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rd\lua-5.3.5\lauxlib.h" />
@@ -84,6 +189,9 @@
     <ClInclude Include="..\3rd\lua-5.3.5\lua.hpp" />
     <ClInclude Include="..\3rd\lua-5.3.5\luaconf.h" />
     <ClInclude Include="..\3rd\lua-5.3.5\lualib.h" />
+    <ClInclude Include="..\lualib-src\lua-seri.h" />
+    <ClInclude Include="..\lualib-src\sproto\msvcint.h" />
+    <ClInclude Include="..\lualib-src\sproto\sproto.h" />
     <ClInclude Include="..\service-src\databuffer.h" />
     <ClInclude Include="..\service-src\hashid.h" />
     <ClInclude Include="..\snownet-src\atomic.h" />
@@ -162,7 +270,7 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;$(SolutionDir)snownet-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -184,7 +292,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rd\lua-5.3.5;$(SolutionDir)snownet-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

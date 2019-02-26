@@ -31,6 +31,36 @@
     <Filter Include="examples\login">
       <UniqueIdentifier>{f8fe38d4-5ab9-4957-b9e4-9fb7045b6ab1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lualib-src\sproto">
+      <UniqueIdentifier>{98360627-f7cb-4c59-93ab-8304c304076c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib">
+      <UniqueIdentifier>{d6638474-1d0b-4602-a927-70e3f4e1bc19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib\compat10">
+      <UniqueIdentifier>{62988689-1c90-44f5-95dc-53ca6da7a1fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib\http">
+      <UniqueIdentifier>{ddd2624c-fe59-4499-8980-47e9a39e955d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib\snownet">
+      <UniqueIdentifier>{a60122da-92aa-4350-81e1-5b31616d41cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib\snax">
+      <UniqueIdentifier>{c2662329-a107-4f77-8460-97b9fac6d5a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib\snownet\datasheet">
+      <UniqueIdentifier>{e9075ba2-3637-413a-822c-fbb3db33c539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib\snownet\db">
+      <UniqueIdentifier>{43cfa819-bef7-41b3-928a-e1402ca24723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib\snownet\sharedata">
+      <UniqueIdentifier>{7ad21e79-a751-4d47-b7fd-d12d6878ab18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lualib\snownet\db\redis">
+      <UniqueIdentifier>{e827b3b6-6715-4396-a279-13c60206d1b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\snownet-src\snownet_test.cc">
@@ -95,6 +125,63 @@
     </ClCompile>
     <ClCompile Include="..\service-src\service_snlua.cc">
       <Filter>service-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lsha1.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-bson.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-clientsocket.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-cluster.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-crypt.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-datasheet.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-debugchannel.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-memory.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-mongo.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-multicast.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-netpack.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-profile.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-seri.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-sharedata.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-snownet.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-socket.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\lua-stm.cc">
+      <Filter>lualib-src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\sproto\lsproto.cc">
+      <Filter>lualib-src\sproto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lualib-src\sproto\sproto.cc">
+      <Filter>lualib-src\sproto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +314,264 @@
     <None Include="..\.gitignore">
       <Filter>res</Filter>
     </None>
+    <None Include="..\service\bootstrap.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\cdummy.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\clusteragent.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\clusterd.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\clusterproxy.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\cmaster.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\cmemory.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\console.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\cslave.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\datacenterd.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\dbg.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\debug_agent.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\debug_console.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\gate.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\launcher.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\multicastd.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\service_cell.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\service_mgr.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\service_provider.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\sharedatad.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\service\snaxd.lua">
+      <Filter>service</Filter>
+    </None>
+    <None Include="..\lualib-src\sproto\README">
+      <Filter>lualib-src\sproto</Filter>
+    </None>
+    <None Include="..\lualib-src\sproto\README.md">
+      <Filter>lualib-src\sproto</Filter>
+    </None>
+    <None Include="..\lualib\loader.lua">
+      <Filter>lualib</Filter>
+    </None>
+    <None Include="..\lualib\md5.lua">
+      <Filter>lualib</Filter>
+    </None>
+    <None Include="..\lualib\sproto.lua">
+      <Filter>lualib</Filter>
+    </None>
+    <None Include="..\lualib\sprotoloader.lua">
+      <Filter>lualib</Filter>
+    </None>
+    <None Include="..\lualib\sprotoparser.lua">
+      <Filter>lualib</Filter>
+    </None>
+    <None Include="..\lualib\compat10\cluster.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\crypt.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\datacenter.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\dns.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\memory.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\mongo.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\mqueue.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\multicast.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\mysql.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\netpack.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\profile.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\redis.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\sharedata.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\sharemap.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\snax.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\socket.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\socketchannel.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\socketdriver.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\compat10\stm.lua">
+      <Filter>lualib\compat10</Filter>
+    </None>
+    <None Include="..\lualib\http\httpc.lua">
+      <Filter>lualib\http</Filter>
+    </None>
+    <None Include="..\lualib\http\httpd.lua">
+      <Filter>lualib\http</Filter>
+    </None>
+    <None Include="..\lualib\http\internal.lua">
+      <Filter>lualib\http</Filter>
+    </None>
+    <None Include="..\lualib\http\sockethelper.lua">
+      <Filter>lualib\http</Filter>
+    </None>
+    <None Include="..\lualib\http\url.lua">
+      <Filter>lualib\http</Filter>
+    </None>
+    <None Include="..\lualib\snax\gateserver.lua">
+      <Filter>lualib\snax</Filter>
+    </None>
+    <None Include="..\lualib\snax\hotfix.lua">
+      <Filter>lualib\snax</Filter>
+    </None>
+    <None Include="..\lualib\snax\interface.lua">
+      <Filter>lualib\snax</Filter>
+    </None>
+    <None Include="..\lualib\snax\loginserver.lua">
+      <Filter>lualib\snax</Filter>
+    </None>
+    <None Include="..\lualib\snax\msgserver.lua">
+      <Filter>lualib\snax</Filter>
+    </None>
+    <None Include="..\lualib\snownet\cluster.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\coroutine.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\datacenter.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\debug.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\dns.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\harbor.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\inject.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\injectcode.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\manager.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\mqueue.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\multicast.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\queue.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\remotedebug.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\service.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\sharedata.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\sharemap.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\snax.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\socket.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\socketchannel.lua">
+      <Filter>lualib\snownet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\datasheet\builder.lua">
+      <Filter>lualib\snownet\datasheet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\datasheet\dump.lua">
+      <Filter>lualib\snownet\datasheet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\datasheet\init.lua">
+      <Filter>lualib\snownet\datasheet</Filter>
+    </None>
+    <None Include="..\lualib\snownet\db\mongo.lua">
+      <Filter>lualib\snownet\db</Filter>
+    </None>
+    <None Include="..\lualib\snownet\db\mysql.lua">
+      <Filter>lualib\snownet\db</Filter>
+    </None>
+    <None Include="..\lualib\snownet\db\redis.lua">
+      <Filter>lualib\snownet\db</Filter>
+    </None>
+    <None Include="..\lualib\snownet\sharedata\corelib.lua">
+      <Filter>lualib\snownet\sharedata</Filter>
+    </None>
+    <None Include="..\lualib\snownet\db\redis\cluster.lua">
+      <Filter>lualib\snownet\db\redis</Filter>
+    </None>
+    <None Include="..\lualib\snownet\db\redis\crc16.lua">
+      <Filter>lualib\snownet\db\redis</Filter>
+    </None>
+    <None Include="..\lualib\snownet.lua">
+      <Filter>lualib</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\snownet-src\snownet_test.h">
@@ -330,6 +675,15 @@
     </ClInclude>
     <ClInclude Include="..\service-src\hashid.h">
       <Filter>service-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lualib-src\lua-seri.h">
+      <Filter>lualib-src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lualib-src\sproto\msvcint.h">
+      <Filter>lualib-src\sproto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lualib-src\sproto\sproto.h">
+      <Filter>lualib-src\sproto</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -55,16 +55,17 @@ LUA_CLIB = snownet \
   client \
   bson md5 sproto lpeg
 
+
+LUA_CLIB_SRC = \
+	lsha1.cc lua-bson.cc lua-clientsocket.cc \
+	lua-cluster.cc lua-crypt.cc lua-datasheet.cc \
+	lua-debugchannel.cc lua-memory.cc lua-multicast.cc \
+	lua-netpack.cc lua-profile.cc lua-seri.cc \
+	lua-sharedata.cc lua-snownet.cc lua-socket.cc \
+	sproto/lsproto.cc sproto/sproto.cc 
+
 LUA_CLIB_SNOWNET = 
 
-SNOWNET_SRC = \
-	snownet_main.cc malloc_hook.cc snownet_daemon.cc \
-	snownet_env.cc snownet_error.cc snownet_handle.cc \
-	snownet_harbor.cc snownet_log.cc snownet_module.cc \
-	snownet_monitor.cc snownet_mq.cc snownet_server.cc \
-	snownet_socket.cc snownet_start.cc snownet_test.cc \
-	snownet_timer.cc socket_server.cc 
-	
 SNOWNET_SRC = \
 	snownet_main.cc malloc_hook.cc snownet_daemon.cc \
 	snownet_env.cc snownet_error.cc snownet_handle.cc \
@@ -81,7 +82,9 @@ all :
 	#$(MAKE) $(foreach v, $(CSERVICE), $(CSERVICE_PATH)/$(v).so) 
 	@echo -e "\033[36m after  all \033[0m"
 	
-$(SNOWNET_BUILD_PATH)/snownet : $(foreach v, $(SNOWNET_SRC), snownet-src/$(v)) $(LUA_LIB) $(MALLOC_STATICLIB) $(foreach v, $(CSERVICE), service-src/service_$(v).cc)
+$(SNOWNET_BUILD_PATH)/snownet : $(foreach v, $(SNOWNET_SRC), snownet-src/$(v)) $(LUA_LIB) $(MALLOC_STATICLIB) \
+	$(foreach v, $(CSERVICE), service-src/service_$(v).cc) \
+	$(foreach v, $(LUA_CLIB_SRC), lualib-src/$(v)) 
 	@echo -e "\033[32m before snownet \033[0m"
 	@echo $(foreach v, $(SNOWNET_SRC), snownet-src/$(v))
 	$(CC) $(CFLAGS) -o $@ $^ -Isnownet-src -I$(JEMALLOC_INC) $(LDFLAGS) $(EXPORT) $(SNOWNET_LIBS) $(SNOWNET_DEFINES)

@@ -19,7 +19,7 @@
 #include "socket_server.h"
 
 
-struct skynet_env {
+struct snownet_env {
 	struct spinlock lock;
 };
 
@@ -137,17 +137,7 @@ main(int argc, char *argv[]) {
 	printf("hello not _WIN32\n");
 #endif
 	printf("hello snownet 1>>>>>\n");
-	struct skynet_env e;
-	SPIN_INIT(&e);
-	SPIN_LOCK(&e);
-	SPIN_UNLOCK(&e);
-	{
-		SPIN_AUTO(&e);
-		int i = 0;
-		i++;
-	}
-	socket_server_create(0);
-	test_function();
+	//test_function();
 
 	const char * config_file = NULL;
 	if (argc > 1) {
