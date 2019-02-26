@@ -5,15 +5,13 @@
 #include "snownet_handle.h"
 #include "snownet_mq.h"
 #include "snownet_timer.h"
-//#include "snownet_harbor.h"
+#include "snownet_harbor.h"
 #include "snownet_env.h"
-//#include "snownet_monitor.h"
+#include "snownet_monitor.h"
 #include "snownet_imp.h"
 #include "snownet_log.h"
 #include "spinlock.h"
 #include "atomic.h"
-
-//#include <pthread.h>
 
 #include <string.h>
 #include <assert.h>
@@ -37,6 +35,71 @@
 #define CHECKCALLING_DESTROY(ctx)
 #define CHECKCALLING_DECL
 
+#endif
+
+#ifndef _WIN32
+#include <pthread.h>
+int xpthread_key_create(pthread_key_t *key, void(*destructor)(void*)) {
+	return pthread_key_create(key, destructor);
+}
+void *xpthread_getspecific(pthread_key_t key) {
+	return pthread_getspecific(key);
+}
+int xpthread_setspecific(pthread_key_t key, const void *value) {
+	return pthread_setspecific(key,value);
+}
+int xpthread_key_delete(pthread_key_t key) {
+	return pthread_key_delete(key);
+}
+#else
+#include <thread>
+#include <windows.h>
+#define MAX_TSD_COUNT 256
+typedef struct thread_key_t {
+	spinlock lock;
+	int c;
+	int tid[MAX_TSD_COUNT];
+	void* data[MAX_TSD_COUNT];
+}thread_key_t,*pthread_key_t;
+int xpthread_key_create(pthread_key_t *key,void(*destructor)(void*)) {
+	thread_key_t* pk = new thread_key_t();
+	SPIN_INIT(pk);
+	pk->c = 0;
+	*key = pk;
+	return 0;
+}
+void *xpthread_getspecific(pthread_key_t& key) {
+	SPIN_AUTO(key);
+	int tid = ::GetCurrentThreadId();
+	int i;
+	for (i = 0; i < key->c && i < MAX_TSD_COUNT; i++) {
+		if (key->tid[i] == tid) {
+			return key->data[i];
+		}
+	}
+	return NULL;
+}
+int xpthread_setspecific(pthread_key_t& key, void *value) {
+	SPIN_AUTO(key);
+	int tid = ::GetCurrentThreadId();
+	int i;
+	for (i = 0; i < key->c && i < MAX_TSD_COUNT; i++) {
+		if (key->tid[i] == tid) {
+			key->data[i] = value;
+			break;
+		}
+	}
+	if (i == key->c) {
+		key->tid[key->c] = tid;
+		key->data[key->c++] = value;
+	}
+	return 0;
+}
+int xpthread_key_delete(pthread_key_t& key) {
+	delete key;
+	key = 0;
+	return 0;
+}
 #endif
 
 struct snownet_context {
@@ -65,8 +128,7 @@ struct snownet_node {
 	std::atomic<int> total;//总的服务个数
 	int init;
 	uint32_t monitor_exit;
-	//TODO
-	//pthread_key_t handle_key;
+	pthread_key_t handle_key;
 	bool profile;	// default is off
 };
 
@@ -254,21 +316,18 @@ snownet_context_endless(uint32_t handle) {
 
 int 
 snownet_isremote(struct snownet_context * ctx, uint32_t handle, int * harbor) {
-	//TODO
-	//int ret = snownet_harbor_message_isremote(handle);
-	//if (harbor) {
-	//	*harbor = (int)(handle >> HANDLE_REMOTE_SHIFT);
-	//}
-	//return ret;
-	return 0;
+	int ret = snownet_harbor_message_isremote(handle);
+	if (harbor) {
+		*harbor = (int)(handle >> HANDLE_REMOTE_SHIFT);
+	}
+	return ret;
 }
 
 static void
 dispatch_message(struct snownet_context *ctx, struct snownet_message *msg) {
 	assert(ctx->init);
 	CHECKCALLING_BEGIN(ctx)
-	//TODO
-	//pthread_setspecific(G_NODE.handle_key, (void *)(uintptr_t)(ctx->handle));
+	xpthread_setspecific(G_NODE.handle_key, (void *)(uintptr_t)(ctx->handle));
 	int type = msg->sz >> MESSAGE_TYPE_SHIFT;
 	size_t sz = msg->sz & MESSAGE_TYPE_MASK;
 	if (ctx->logfile) {
@@ -333,16 +392,14 @@ snownet_context_message_dispatch(struct snownet_monitor *sm, struct message_queu
 		if (overload) {
 			snownet_error(ctx, "May overload, message queue length = %d", overload);
 		}
-		//TODO
-		//snownet_monitor_trigger(sm, msg.source , handle);
+		snownet_monitor_trigger(sm, msg.source , handle);
 
 		if (ctx->cb == NULL) {
 			snownet_free(msg.data);
 		} else {
 			dispatch_message(ctx, &msg); // 处理回调函数
 		}
-		//TODO
-		//snownet_monitor_trigger(sm, 0,0);
+		snownet_monitor_trigger(sm, 0,0);
 	}
 
 	assert(q == ctx->queue);//逻辑保证，这个消息处理的时候，ctx->queue没有被修改过
@@ -361,17 +418,16 @@ snownet_context_message_dispatch(struct snownet_monitor *sm, struct message_queu
 	return q;
 }
 
-//TODO
-//static void
-//copy_name(char name[GLOBALNAME_LENGTH], const char * addr) {
-//	int i;
-//	for (i = 0; i < GLOBALNAME_LENGTH && addr[i]; i++) {
-//		name[i] = addr[i];
-//	}
-//	for (; i < GLOBALNAME_LENGTH; i++) {
-//		name[i] = '\0';
-//	}
-//}
+static void
+copy_name(char name[GLOBALNAME_LENGTH], const char * addr) {
+	int i;
+	for (i = 0; i < GLOBALNAME_LENGTH && addr[i]; i++) {
+		name[i] = addr[i];
+	}
+	for (; i < GLOBALNAME_LENGTH; i++) {
+		name[i] = '\0';
+	}
+}
 
 uint32_t 
 snownet_queryname(struct snownet_context * context, const char * name) {
@@ -768,16 +824,15 @@ snownet_send(struct snownet_context * context, uint32_t source, uint32_t destina
 
 		return session;
 	}
-	//TODO
-	//if (snownet_harbor_message_isremote(destination)) {
-	//	struct remote_message * rmsg = snownet_malloc(sizeof(*rmsg));
-	//	rmsg->destination.handle = destination;
-	//	rmsg->message = data;
-	//	rmsg->sz = sz & MESSAGE_TYPE_MASK;
-	//	rmsg->type = sz >> MESSAGE_TYPE_SHIFT;
-	//	snownet_harbor_send(rmsg, source, session);
-	//}
-	//else {
+	if (snownet_harbor_message_isremote(destination)) {
+		struct remote_message * rmsg = (struct remote_message *)snownet_malloc(sizeof(*rmsg));
+		rmsg->destination.handle = destination;
+		rmsg->message = data;
+		rmsg->sz = sz & MESSAGE_TYPE_MASK;
+		rmsg->type = sz >> MESSAGE_TYPE_SHIFT;
+		snownet_harbor_send(rmsg, source, session);
+	}
+	else {
 		struct snownet_message smsg;
 		smsg.source = source;
 		smsg.session = session;
@@ -788,7 +843,7 @@ snownet_send(struct snownet_context * context, uint32_t source, uint32_t destina
 			snownet_free(data);
 			return -1;
 		}
-	//}
+	}
 	return session;
 }
 
@@ -820,15 +875,14 @@ snownet_sendname(struct snownet_context * context, uint32_t source, const char *
 		}
 		_filter_args(context, type, &session, (void **)&data, &sz);
 
-		//TODO
-		//struct remote_message * rmsg = (struct remote_message *)snownet_malloc(sizeof(*rmsg));
-		//copy_name(rmsg->destination.name, addr);
-		//rmsg->destination.handle = 0;
-		//rmsg->message = data;
-		//rmsg->sz = sz & MESSAGE_TYPE_MASK;
-		//rmsg->type = sz >> MESSAGE_TYPE_SHIFT;
+		struct remote_message * rmsg = (struct remote_message *)snownet_malloc(sizeof(*rmsg));
+		copy_name(rmsg->destination.name, addr);
+		rmsg->destination.handle = 0;
+		rmsg->message = data;
+		rmsg->sz = sz & MESSAGE_TYPE_MASK;
+		rmsg->type = sz >> MESSAGE_TYPE_SHIFT;
 
-		//snownet_harbor_send(rmsg, source, session);
+		snownet_harbor_send(rmsg, source, session);
 		return session;
 	}
 
@@ -863,26 +917,23 @@ snownet_globalinit(void) {
 	G_NODE.total = 0;
 	G_NODE.monitor_exit = 0;
 	G_NODE.init = 1;
-	//TODO
-	//if (pthread_key_create(&G_NODE.handle_key, NULL)) {
-	//	fprintf(stderr, "pthread_key_create failed");
-	//	exit(1);
-	//}
+	if (xpthread_key_create(&G_NODE.handle_key, NULL)) {
+		fprintf(stderr, "pthread_key_create failed");
+		exit(1);
+	}
 	// set mainthread's key
 	snownet_initthread(THREAD_MAIN);
 }
 
 void 
 snownet_globalexit(void) {
-	//TODO
-	//pthread_key_delete(G_NODE.handle_key);
+	xpthread_key_delete(G_NODE.handle_key);
 }
 
 void
 snownet_initthread(int m) {
-	//TODO
-	//uintptr_t v = (uint32_t)(-m);
-	//pthread_setspecific(G_NODE.handle_key, (void *)v);
+	uintptr_t v = (uint32_t)(-m);
+	xpthread_setspecific(G_NODE.handle_key, (void *)v);
 }
 
 void

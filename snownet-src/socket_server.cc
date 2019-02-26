@@ -6,7 +6,6 @@
 #include "spinlock.h"
 
 #include <sys/types.h>
-#include <errno.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -17,6 +16,7 @@
 #include <atomic>
 
 #ifndef _WIN32
+#include <errno.h>
 #include <sys/socket.h>
 #include <netinet/tcp.h>
 #include <unistd.h>
@@ -26,7 +26,54 @@
 #include <ws2tcpip.h> //inet_ntop
 #include "socket_pipe.h"
 #endif
-
+#ifndef _WIN32
+int xerrno() {
+	return errno;
+}
+char* xstrerror() {
+	return strerror(errno);
+}
+char* xstrerror(int en) {
+	return strerror(en);
+}
+#else
+int xerrno() {
+	int en = WSAGetLastError();
+	switch (en) {
+	case WSAEINPROGRESS: en = EINPROGRESS; break;
+	case WSAEINTR: en = EINTR; break;
+	case WSATRY_AGAIN: en = EAGAIN; break;
+	case WSAEMFILE: en = EMFILE; break;
+	default:break;
+	}
+	return en;
+}
+char* xstrerror() {
+	static char szError[256];
+	FormatMessageA(
+		FORMAT_MESSAGE_FROM_SYSTEM,
+		NULL,
+		0,
+		0,
+		szError,
+		sizeof(szError),
+		NULL);
+	return szError;
+}
+char* xstrerror(int en) {
+	static char szError[256];
+	FormatMessageA(
+		FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL,
+		en,
+		0,
+		szError,
+		sizeof(szError),
+		NULL);
+	return szError;
+}
+#endif
 #define MAX_INFO 128
 // MAX_SOCKET will be 2^MAX_SOCKET_P
 #define MAX_SOCKET_P 16
@@ -578,7 +625,7 @@ open_socket(struct socket_server *ss, struct request_open * request, struct sock
 			socket_keepalive(sock);
 			sp_nonblocking(sock);
 			status = connect(sock, ai_ptr->ai_addr, ai_ptr->ai_addrlen);
-			if (status != 0 && errno != EINPROGRESS) {
+			if (status != 0 && xerrno() != EINPROGRESS) {
 				xclose(sock);
 				sock = -1;
 				continue;
@@ -587,7 +634,7 @@ open_socket(struct socket_server *ss, struct request_open * request, struct sock
 		}
 
 		if (sock < 0) {
-			result->data = strerror(errno);
+			result->data = xstrerror();
 			break;
 		}
 
@@ -633,7 +680,7 @@ send_list_tcp(struct socket_server *ss, struct socket_st *s, struct wb_list *lis
 			size_t sz = send(s->fd, tmp->ptr, tmp->sz, 0);
 #endif
 			if (sz < 0) {
-				switch(errno) {
+				switch(xerrno()) {
 				case EINTR:
 					continue;
 				case AGAIN_WOULDBLOCK:
@@ -705,12 +752,12 @@ send_list_udp(struct socket_server *ss, struct socket_st *s, struct wb_list *lis
 		}
 		int err = sendto(s->fd, tmp->ptr, tmp->sz, 0, &sa.s, sasz);
 		if (err < 0) {
-			switch(errno) {
+			switch(xerrno()) {
 			case EINTR:
 			case AGAIN_WOULDBLOCK:
 				return -1;
 			}
-			fprintf(stderr, "socket-server : udp (%d) sendto error %s.\n",s->id, strerror(errno));
+			fprintf(stderr, "socket-server : udp (%d) sendto error %s.\n",s->id, xstrerror());
 			drop_udp(ss, s, list, tmp);
 			return -1;
 		}
@@ -1048,7 +1095,7 @@ start_socket(struct socket_server *ss, struct request_start *request, struct soc
 	if (s->type == SOCKET_TYPE_PACCEPT || s->type == SOCKET_TYPE_PLISTEN) {
 		if (sp_add(ss->event_fd, s->fd, s)) {
 			force_close(ss, s, &l, result);
-			result->data = strerror(errno);
+			result->data = xstrerror();
 			return SOCKET_ERR;
 		}
 		s->type = (s->type == SOCKET_TYPE_PACCEPT) ? SOCKET_TYPE_CONNECTED : SOCKET_TYPE_LISTEN;
@@ -1086,9 +1133,9 @@ block_readpipe(int pipefd, void *buffer, int sz) {
 		n = recv(pipefd, (char*)buffer, sz,0);
 #endif
 		if (n<0) {
-			if (errno == EINTR)
+			if (xerrno() == EINTR)
 				continue;
-			fprintf(stderr, "socket-server : read pipe error %s.\n",strerror(errno));
+			fprintf(stderr, "socket-server : read pipe error %s.\n",xstrerror());
 			return;
 		}
 		// must atomic read from a pipe
@@ -1260,7 +1307,7 @@ forward_message_tcp(struct socket_server *ss, struct socket_st *s, struct socket
 #endif
 	if (n<0) {
 		FREE(buffer);
-		switch(errno) {
+		switch(xerrno()) {
 		case EINTR:
 			break;
 		case AGAIN_WOULDBLOCK:
@@ -1269,7 +1316,7 @@ forward_message_tcp(struct socket_server *ss, struct socket_st *s, struct socket
 		default:
 			// close when error
 			force_close(ss, s, l, result);
-			result->data = strerror(errno);
+			result->data = xstrerror();
 			return SOCKET_ERR;
 		}
 		return -1;
@@ -1327,14 +1374,14 @@ forward_message_udp(struct socket_server *ss, struct socket_st *s, struct socket
 	int n = 0;
 	n = recvfrom(s->fd, (char*)ss->udpbuffer, MAX_UDP_PACKAGE, 0, &sa.s, &slen);
 	if (n<0) {
-		switch(errno) {
+		switch(xerrno()) {
 		case EINTR:
 		case AGAIN_WOULDBLOCK:
 			break;
 		default:
 			// close when error
 			force_close(ss, s, l, result);
-			result->data = strerror(errno);
+			result->data = xstrerror();
 			return SOCKET_ERR;
 		}
 		return -1;
@@ -1375,7 +1422,7 @@ report_connect(struct socket_server *ss, struct socket_st *s, struct socket_lock
 		if (code >= 0)
 			result->data = strerror(error);
 		else
-			result->data = strerror(errno);
+			result->data = xstrerror();
 		return SOCKET_ERR;
 	} else {
 		s->type = SOCKET_TYPE_CONNECTED;
@@ -1421,11 +1468,11 @@ report_accept(struct socket_server *ss, struct socket_st *s, struct socket_messa
 	socklen_t len = sizeof(u);
 	int client_fd = accept(s->fd, &u.s, &len);
 	if (client_fd < 0) {
-		if (errno == EMFILE || errno == ENFILE) {
+		if (xerrno() == EMFILE || xerrno() == ENFILE) {
 			result->opaque = s->opaque;
 			result->id = s->id;
 			result->ud = 0;
-			result->data = strerror(errno);
+			result->data = xstrerror();
 			return -1;
 		} else {
 			return 0;
@@ -1502,7 +1549,7 @@ socket_server_poll(struct socket_server *ss, struct socket_message * result, int
 			ss->event_index = 0;
 			if (ss->event_n <= 0) {
 				ss->event_n = 0;
-				if (errno == EINTR) {
+				if (xerrno() == EINTR || xerrno() == 0) {
 					continue;
 				}
 				return -1;
@@ -1567,9 +1614,9 @@ socket_server_poll(struct socket_server *ss, struct socket_message * result, int
 				int code = xgetsockopt(s->fd, SOL_SOCKET, SO_ERROR, &error, &len);  
 				const char * err = NULL;
 				if (code < 0) {
-					err = strerror(errno);
+					err = xstrerror();
 				} else if (error != 0) {
-					err = strerror(error);
+					err = xstrerror(error);
 				} else {
 					err = "Unknown error";
 				}
@@ -1598,8 +1645,8 @@ send_request(struct socket_server *ss, struct request_package *request, char typ
 		n = recv(ss->sendctrl_fd, (char*)&request->header[6], len + 2, 0);
 #endif
 		if (n<0) {
-			if (errno != EINTR) {
-				fprintf(stderr, "socket-server : send ctrl command error %s.\n", strerror(errno));
+			if (xerrno() != EINTR) {
+				fprintf(stderr, "socket-server : send ctrl command error %s.\n", xstrerror());
 			}
 			continue;
 		}

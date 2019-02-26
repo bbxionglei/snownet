@@ -141,11 +141,9 @@ thread_timer(void *p) {
 	// wakeup socket thread
 	snownet_socket_exit();
 	// wakeup all worker thread
-
 	std::unique_lock<std::mutex> lck(m->mutex);
 	m->quit = 1;
-	/*pthread_cond_broadcast(&m->cond);*/
-	m->cond.wait(lck);
+	m->cond.notify_all();
 	return NULL;
 }
 
@@ -180,8 +178,11 @@ start(int threadc) {
 
 	struct monitor *m = (struct monitor *)snownet_malloc(sizeof(*m));
 	memset(m, 0, sizeof(*m));
+	m = new (m) struct monitor();
 	m->count = threadc;//监控几个线程，判断有没有死循环
 	m->sleep = 0;
+	m->mutex.lock();
+	m->mutex.unlock();
 
 	m->m = (struct snownet_monitor **)snownet_malloc(threadc * sizeof(struct snownet_monitor *));
 	int i;
